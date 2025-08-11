@@ -1,5 +1,7 @@
 import numpy as np
 
+TOKEN = 'W6QyiJRRS.DFibko9DVIuZwdqoTa5mGtl8HxoIYy4pfCPMTwhBztGrnXovVzUT0L6c-7nilqVxg1lcWd7Fj0pmLHvmb9RmA8TD8fSndBorSlfdVxPcJRQuKs.R5M9Ecu6G5DyJaAPwULZPs5r6H23G8='
+
 def project_to_simplex(v: np.ndarray) -> np.ndarray:
     """
     Project vector v onto the probability simplex using the efficient algorithm.
@@ -79,10 +81,3 @@ def apply_mitigation_locality(A_inv: np.ndarray, x: np.ndarray, qubit_index: int
     mitigated_x = project_to_simplex(quasi_x)
 
     return mitigated_x
-
-if __name__ == "__main__":
-    # Example usage
-    v = np.array([-0.1, 0.2, -0.2, 0.7, 0.4])
-    
-    u = project_to_simplex(v)
-    print("Projected vector:", u)
