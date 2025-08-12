@@ -4,11 +4,11 @@ from itertools import product
 from scipy.optimize import least_squares
 from noise_sim_tc import noise_sim
 
-w = np.array([0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99])
+#w = np.array([0.999,0.999,0.999,0.999,0.999,0.999,0.999,0.999,0.999,0.999,0.999,0.999,0.999,0.999,0.999,0.999,])
 
 
 
-def expectation_n_noisy_channel_cz(circuit, control, target, n_noise: np.float64):
+def expectation_n_noisy_channel_cz(circuit, control, target, w, n_noise: np.float64):
     pauli_gate_funcs = [lambda c, q: None,  # I门不操作
                 lambda c, q: c.x(q),
                 lambda c, q: c.y(q),
