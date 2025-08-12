@@ -4,9 +4,7 @@ from itertools import product
 from scipy.optimize import least_squares
 from noise_sim_tc import noise_sim
 
-w = np.array([1.,0.973, 0.973, 0.973, 0.985, 1.,
- 0.986, 1., 1., 0.986, 1., 0.986,
- 1. ,0.973, 0.973, 0.973])
+w = np.array([0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99])
 
 
 
