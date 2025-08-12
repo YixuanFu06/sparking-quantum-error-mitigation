@@ -34,12 +34,12 @@ def create_circuit_with_prep_state(n: int, target_state) -> tc.Circuit:
     
     return circuit
 
-def execute_and_measure(c: tc.Circuit, shots=8092) -> dict:
+def execute_and_measure(c: tc.Circuit, shots=8192) -> dict:
     """执行量子线路并测量"""
     ts = apis.submit_task(provider="tencent", device='tianji_s2', circuit=c, shots=shots)
     return ts.results()
 
-def measure_readout_error_matrix(n, shots=8092, token=TOKEN) -> np.ndarray:
+def measure_readout_error_matrix(n, shots=8192, token=TOKEN) -> np.ndarray:
     """
     不基于locality假设，测量完整的readout error矩阵
     
@@ -107,7 +107,7 @@ def create_circuit_with_prep_1(n):
         circuit.x(i)
     return circuit
 
-def measure_readout_error_matrix_locality(n: int, shots=8092, token=TOKEN) -> np.ndarray:
+def measure_readout_error_matrix_locality(n: int, shots=8192, token=TOKEN) -> np.ndarray:
     """
     利用量子比特间不相互干扰的假设，并行测量所有量子比特的readout error
     通过多比特并行测量提高效率
@@ -184,6 +184,6 @@ if __name__ == "__main__":
     print("完整的readout error矩阵:")
     print(readout_matrix)
 
-    readout_matrix_locality = measure_readout_error_matrix_locality(2, shots=8092)
+    readout_matrix_locality = measure_readout_error_matrix_locality(2, shots=8192)
     print("基于locality假设的readout error矩阵:")
     print(readout_matrix_locality)

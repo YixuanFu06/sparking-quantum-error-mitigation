@@ -36,14 +36,14 @@ def remove_measure_commands() -> None:
     else:
         print("没有找到需要删除的测量命令")
 
-def add_measure_commands(n: int) -> None:
+def add_measure_commands(qubits: list[int]) -> None:
     """
     在 tencent.py 文件的第217行开始添加 measure 命令
     
     Parameters:
     -----------
-    n : int
-        要添加的测量命令数量，对应量子比特数
+    qubits : list[int]
+        要添加的测量量子比特
     """
 
     remove_measure_commands()
@@ -56,7 +56,7 @@ def add_measure_commands(n: int) -> None:
     
     # 生成要插入的测量命令
     measure_commands = []
-    for i in range(n):
+    for i in qubits:
         measure_commands.append(f"                    s += 'measure q[{i}];\\n'\n")
     
     # 在第216行（索引215）后插入测量命令
@@ -71,7 +71,7 @@ def add_measure_commands(n: int) -> None:
         with open(file_path, 'w', encoding='utf-8') as f:
             f.writelines(lines)
         
-        print(f"成功添加了 {n} 个测量命令到 tencent.py 文件第 {target_line+2} 行开始")
+        print(f"成功添加了 {len(qubits)} 个测量命令到 tencent.py 文件第 {target_line+2} 行开始")
     else:
         print(f"错误：文件只有 {len(lines)} 行，无法在第 {target_line+1} 行后插入")
 
@@ -140,7 +140,7 @@ if __name__ == "__main__":
         try:
             n = int(input("请输入量子比特数量: "))
             backup_file()  # 先备份
-            add_measure_commands(n)
+            add_measure_commands(list(range(n)))
         except ValueError:
             print("请输入有效的整数")
     elif choice == "4":

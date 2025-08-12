@@ -6,14 +6,14 @@ from pseudoinverse import pseudoinverse, pseudoinverse_locality
 
 TOKEN = 'W6QyiJRRS.DFibko9DVIuZwdqoTa5mGtl8HxoIYy4pfCPMTwhBztGrnXovVzUT0L6c-7nilqVxg1lcWd7Fj0pmLHvmb9RmA8TD8fSndBorSlfdVxPcJRQuKs.R5M9Ecu6G5DyJaAPwULZPs5r6H23G8='
 
-def get_mitigation_matrix(qubits_num: int, shots=8092, token=TOKEN, locality=False) -> np.ndarray:
+def get_mitigation_matrix(qubits_num, shots=8192, token=TOKEN) -> np.ndarray:
     """
     获取n比特量子比特的readout error缓解矩阵
     
     Parameters:
     -----------
-    n : int
-        量子比特数量
+    qubits : list[int]
+        量子比特
     shots : int
         每个态的测量次数
         
@@ -23,30 +23,23 @@ def get_mitigation_matrix(qubits_num: int, shots=8092, token=TOKEN, locality=Fal
         readout error缓解矩阵
     """
 
-    add_measure_commands(qubits_num)  # 添加测量命令
+    add_measure_commands(list(range(qubits_num)))  # 添加测量命令
 
     from readout_matrix import measure_readout_error_matrix, measure_readout_error_matrix_locality
 
-    if locality:
-        readout_matrix = measure_readout_error_matrix_locality(qubits_num, shots=shots, token=token)
-    else:
-        readout_matrix = measure_readout_error_matrix(qubits_num, shots=shots, token=token)
+    readout_matrix = measure_readout_error_matrix_locality(qubits_num, shots=shots, token=token)
+
     print("Measured full readout error matrix:")
     print(readout_matrix)
 
-    if locality:
-        readout_matrix_inv = pseudoinverse_locality(readout_matrix)
-    else:
-        readout_matrix_inv = pseudoinverse(readout_matrix)
+    readout_matrix_inv = pseudoinverse_locality(readout_matrix)
+
     print("Pseudoinverse of the readout error matrix:")
     print(readout_matrix_inv)
 
     # Save the matrices for later use
     DATA_DIR = "../data"
-    if locality:
-        MAT_PATH = f"{DATA_DIR}/{qubits_num}qubits_readout_matrix_pseudoinverse_locality.npy"
-    else:
-        MAT_PATH = f"{DATA_DIR}/{qubits_num}qubits_readout_matrix_pseudoinverse.npy"
+    MAT_PATH = f"{DATA_DIR}/readout_matrix_pseudoinverse_locality.npy"
     # make sure the directory exists
     os.makedirs(DATA_DIR, exist_ok=True)
 
@@ -60,5 +53,5 @@ def get_mitigation_matrix(qubits_num: int, shots=8092, token=TOKEN, locality=Fal
 
 
 if __name__ == "__main__":
-    qubits_num = 4  # Number of qubits
-    get_mitigation_matrix(qubits_num, shots=8092, token=TOKEN, locality=True)
+    qubits_num = 13
+    get_mitigation_matrix(qubits_num, shots=8192, token=TOKEN)
