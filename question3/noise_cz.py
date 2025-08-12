@@ -4,7 +4,7 @@ from itertools import product
 from scipy.optimize import least_squares
 from noise_sim_tc import noise_sim
 
-w = np.array([1. ,1., 1., 1., 1., 1.,
+w = np.array([0.9 ,1., 1., 1., 1., 1.,
 1., 1., 1., 1., 1., 1.,
  1. , 1., 1., 1.])
 
@@ -27,7 +27,3 @@ def expectation_n_noisy_channel_cz(circuit, control, target, n_noise: np.float64
     # 添加噪声,虽然看起来对所有门（包括pauli words）都添加了噪声，但实际上噪声只作用于 CZ 门（因为噪声模拟器只作用于2比特门）
     #if n_noise != 0:
         #circuit = noise_sim(circuit) 
-for i in range(100):
-    c = tc.Circuit(2)
-    expectation_n_noisy_channel_cz(c, 0, 1, 1.)
-    print(c.state())
