@@ -25,9 +25,12 @@ def get_mitigation_matrix(qubits_num: int, shots=8092, token=TOKEN, locality=Fal
 
     add_measure_commands(qubits_num)  # 添加测量命令
 
-    from readout_matrix import measure_readout_error_matrix
+    from readout_matrix import measure_readout_error_matrix, measure_readout_error_matrix_locality
 
-    readout_matrix = measure_readout_error_matrix(qubits_num, shots=shots, token=token)
+    if locality:
+        readout_matrix = measure_readout_error_matrix_locality(qubits_num, shots=shots, token=token)
+    else:
+        readout_matrix = measure_readout_error_matrix(qubits_num, shots=shots, token=token)
     print("Measured full readout error matrix:")
     print(readout_matrix)
 
@@ -58,4 +61,4 @@ def get_mitigation_matrix(qubits_num: int, shots=8092, token=TOKEN, locality=Fal
 
 if __name__ == "__main__":
     qubits_num = 4  # Number of qubits
-    get_mitigation_matrix(qubits_num, shots=8092, token=TOKEN, locality=False)
+    get_mitigation_matrix(qubits_num, shots=8092, token=TOKEN, locality=True)

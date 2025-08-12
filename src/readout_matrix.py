@@ -36,7 +36,7 @@ def create_circuit_with_prep_state(n: int, target_state) -> tc.Circuit:
 
 def execute_and_measure(c: tc.Circuit, shots=8092) -> dict:
     """执行量子线路并测量"""
-    ts = apis.submit_task(provider="tencent", device='tianji_s2?o=3', circuit=c, shots=shots)
+    ts = apis.submit_task(provider="tencent", device='tianji_s2', circuit=c, shots=shots)
     return ts.results()
 
 def measure_readout_error_matrix(n, shots=8092, token=TOKEN) -> np.ndarray:
@@ -107,7 +107,7 @@ def create_circuit_with_prep_1(n):
         circuit.x(i)
     return circuit
 
-def measure_readout_error_matrix_locality(n: int, shots=8092) -> np.ndarray:
+def measure_readout_error_matrix_locality(n: int, shots=8092, token=TOKEN) -> np.ndarray:
     """
     利用量子比特间不相互干扰的假设，并行测量所有量子比特的readout error
     通过多比特并行测量提高效率
@@ -121,17 +121,18 @@ def measure_readout_error_matrix_locality(n: int, shots=8092) -> np.ndarray:
     --------
     readout_tensor : np.ndarray, shape (n, 2, 2)
     """
+    apis.set_token(token)
 
     # 初始化 N×2×2 的张量
     readout_tensor = np.zeros((n, 2, 2))
     
     # 所有量子比特制备为|0⟩态并测量
     circuit_all_0 = create_circuit_with_prep_0(n)
-    counts_all_0 = execute_and_measure(circuit_all_0, shots)
+    counts_all_0 = execute_and_measure(circuit_all_0, shots=shots)
     
     # 所有量子比特制备为|1⟩态并测量
     circuit_all_1 = create_circuit_with_prep_1(n)
-    counts_all_1 = execute_and_measure(circuit_all_1, shots)
+    counts_all_1 = execute_and_measure(circuit_all_1, shots=shots)
     
     # 从多比特测量结果中提取单比特统计
     for qubit in range(n):
