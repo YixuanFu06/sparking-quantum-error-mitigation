@@ -14,7 +14,7 @@ def expectation_n_noisy_channel_cz(circuit, control, target, w, n_noise: np.int3
                 lambda c, q: c.y(q),
                 lambda c, q: c.z(q)]
     if n_noise > 0:
-        for i in range(n_noise - 1):
+        for i in range(n_noise):
             for i in range(4):
                 for j in range(4):
                     n = 4*i+j
