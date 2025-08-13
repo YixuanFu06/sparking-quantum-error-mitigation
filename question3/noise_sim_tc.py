@@ -38,8 +38,6 @@ def noise_sim(c_mat):
             c_mat_noise.apply_general_kraus(cs, [[index['index'][0], index['index'][1]]])
 
 
-                
-
 
             c_mat_noise.append_from_qir([index])
 
