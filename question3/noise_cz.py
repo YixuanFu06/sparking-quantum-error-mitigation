@@ -8,7 +8,7 @@ from noise_sim_tc import noise_sim
 
 
 
-def expectation_n_noisy_channel_cz(circuit, control, target, w, n_noise: np.float64):
+def expectation_n_noisy_channel_cz(circuit, control, target, w, n_noise: np.int32):
     pauli_gate_funcs = [lambda c, q: None,  # I门不操作
                 lambda c, q: c.x(q),
                 lambda c, q: c.y(q),
