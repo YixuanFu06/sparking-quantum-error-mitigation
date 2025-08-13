@@ -27,10 +27,10 @@ def noise_sim(c_mat):
         if len(index['index']) >= 2:
 
 
-            for jndex in index['index']:
+            # for jndex in index['index']:
 
-                # 注意 noise 需要在 gate 前面加入才可以. # 这里加入 single qubit_noise
-                c_mat_noise.depolarizing(jndex,px = 0.001, py = 0, pz = 0.001)
+            #     # 注意 noise 需要在 gate 前面加入才可以. # 这里加入 single qubit_noise
+            #     c_mat_noise.depolarizing(jndex,px = 0.001, py = 0, pz = 0.001)
 
             # 这个地方可以加入任何我们想要加入的 noise, 下面试试能不能加入 2 qubit 的 noise 进去. 
             # cs = tc.channels.generaldepolarizingchannel(0.002,2)
